@@ -1,0 +1,48 @@
+# https://learn.microsoft.com/en-us/azure/virtual-machines/windows/quick-create-cli
+# Login no Azure
+az login
+
+# Parametros
+rg=vm-win
+local=brazilsouth
+vm=vm-win2022
+img=Win2022AzureEditionCore
+user=daniel
+
+# Criar Grupo de Recursos
+az group create -n $rg -l $local
+
+# Criar VM
+az vm create -g $rg -n $vm --image $img --admin-username $user --admin-password tr@ining202$
+
+
+# Listar VMs do Azure
+az vm list -g $rg
+az vm list -g $rg -o yaml
+
+# Mostrar Detalhes da VM
+az vm show -g $rg -n $vm
+az vm show -g $rg -n $vm -o yaml
+az vm show -g $rg -n $vm --query "name"
+
+# Obter IP Publico da VM
+az vm show -d -g $rg -n $vm --query publicIps -o tsv
+
+# Obter IP Privado da VM
+az vm show -d -g $rg -n $vm --query privateIps -o tsv
+
+# Abrir Porta 80 da VM
+az vm open-port --port 80 -g $rg --name $vm
+
+# Request no IP Publico
+curl 
+
+# Instalar IIS Web Server
+az vm run-command invoke -g $rg -n $vm --command-id RunPowerShellScript --scripts "Install-WindowsFeature -name Web-Server -IncludeManagementTools"
+
+# Adicionar Pagina Customizada no IIS
+az vm run-command invoke -g $rg -n $vm --command-id RunPowerShellScript --scripts 'Set-Content -Path "C:\inetpub\wwwroot\iisstart.htm" -Value "VM no Azure!"'
+
+# # Excluir Grupo de Recursos
+az group delete -n $rg -y
+

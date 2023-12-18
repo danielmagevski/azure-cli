@@ -1,0 +1,45 @@
+# Login no Azure
+az login
+
+# Parametros
+rg=rg-vmlinux
+local=brazilsouth
+vm=vm-linux-ubuntu
+img=debian
+user=azureuser
+
+# Criar Grupo de Recurso
+az group create -n $rg -l $local
+
+# Criar VM Linux Debian
+az vm create -g $rg -n $vm --image $img --admin-username $user --generate-ssh-keys --public-ip-sku Basic
+
+# Listar VMs do Azure
+az vm list -g $rg
+az vm list -g $rg -o yaml
+
+# Mostrar Detalhes da VM
+az vm show -g $rg -n $vm
+az vm show -g $rg -n $vm -o yaml
+az vm show -g $rg -n $vm --query "name"
+
+# Obter IP Publico da VM
+az vm show -d -g $rg -n $vm --query publicIps -o tsv
+
+# IP Address Publico
+ip=$(az vm show -d -g $rg -n $vm --query publicIps -o tsv)
+
+# IP Address Privada
+ip=$(az vm show -d -g $rg -n $vm --query privateIps -o tsv)
+
+# Rodar comando para Instalar NGINX
+az vm run-command invoke -g $rg -n $vm --command-id RunShellScript --scripts "sudo apt-get update && sudo apt-get install -y nginx"
+
+# Abrir Porta 80
+az vm open-port --port 80 -g $rg -n $vm
+
+# Request na porta 80 do IP Publico
+curl $ip
+
+# Excluir Grupo de Recursos
+az group delete -n $rg -y

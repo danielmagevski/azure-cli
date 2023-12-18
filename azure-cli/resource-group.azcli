@@ -1,0 +1,4 @@
+az login
+az group create -l brazilsouth -g lab
+az group list
+az group delete -n lab
