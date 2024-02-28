@@ -1,0 +1,11 @@
+# Login no Azure
+az login
+
+# Criar Grupo de Recurso
+az group create -l brazilsouth -n rgname
+
+# Criar Storage Account
+az storage account create --name storagename -g rgname --location brasilsouth --sku Standard_LRS
+
+# Criar Container
+az storage container create -n containername --account-name storagedanielmagevski

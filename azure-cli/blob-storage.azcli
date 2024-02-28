@@ -1,0 +1,29 @@
+# Login no Azure
+az login
+
+# Criar Grupo de Recurso
+az group create -l brazilsouth -n 
+
+# Criar Storage Account
+az storage account create -g rg-name -n storagename
+
+# Listar Storage Account
+az storage account list -g g-name -o table
+
+# Listar Container
+az storage container list --account-name name -o table
+
+# Upload para o Container
+az storage blob upload --container-name containername --account-name accountname --name image.png --file c:/imagens/image.png
+
+# Listar Arquivos no Container
+az storage blob list --container-name containername --account-name accountname -o table
+
+# Setar Permissao
+az storage container set-permission --name containername --public-access blob --account-name accountname
+
+# Listar 
+az storage account keys list -g g-name -n storagename
+
+
+

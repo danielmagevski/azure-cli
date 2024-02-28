@@ -1,1 +1,1 @@
-## Azure notes
+## Azure CLI Notes
