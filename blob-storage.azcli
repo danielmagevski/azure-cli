@@ -25,5 +25,3 @@ az storage container set-permission --name containername --public-access blob --
 # Listar 
 az storage account keys list -g g-name -n storagename
 
-
-
