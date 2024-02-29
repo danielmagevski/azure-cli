@@ -1,0 +1,28 @@
+#Login no Azure
+az login
+
+# Variaveis
+rg=rg-aks
+local=eastus
+aks=aks-cluster
+sku=Stantard_B2s
+
+# Grupo de recurso
+az grou create -n $rg -l $local
+
+# Criar AKS com 2 nodes, SKU e AAD habilitado e conta local desativada
+az aks create -g $rg -n $aks --enable-aad --disable-local-accounts --node-count 2 --node-vm-size $sku
+
+# Mostrar Detahles do AKS
+az aks show -g $rg -n $aks -o yaml
+
+# Detahles do Azure RBAC
+az aks show -g $rg -n $aks --query {AzureRBAC:addProfile} -o yaml
+
+# Ativar o Azure RBAC
+az aks update -g $rg -n $aks --enable-azure-rbac
+
+
+
+
+

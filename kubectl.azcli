@@ -1,0 +1,80 @@
+# Login no Azure 
+az login
+
+# Parametros
+rg=rg-basic
+local=eastus
+aks=aks-basic
+sku=Standard_B2s
+
+# Instalar Kubectl
+az aks install-cli
+
+# Criar Grupo de Recursos
+az group create -n $rg -l $local
+
+# Criar AKS
+az aks create -g $rg -n $aks --node-count 1 --node-vm-size $sku 
+
+# Obter Credenciais
+az aks get-credentials -g $rg -n $aks
+
+# Obter Versdoes do Kubernetes
+kubectl version -o yaml
+
+# Informacoes do Cluster
+kubectl cluster-info
+
+# Configuracoes do Cluster
+kubectl config view
+
+# API Resources
+kubectl api-resources
+
+# API Version
+kubectl api-versions
+
+
+# GET - Todos os objetos de todos os namespaces
+kubectl get all
+kubectl get all --all-namespaces
+
+# GET - Obter Pods
+kubectl get pods
+kubectl get po
+kubectl get po --all-namespaces
+kubectl get pods --namespace kube-system
+
+# GET - Obter Namespaces
+kubectl get namespaces
+kubectl get ns
+kubectl get pods -n kube-system
+
+# GET - Obter Nodes
+kubectl get nodes
+kubectl get no
+kubectl get nodes -o wide
+
+# Criar POD com imagem NGINX
+kubectl run nginx --image=nginx
+kubectl get pods
+kubectl run busybox --image=busybox --restart=Never
+
+# Excluir Pod
+kubectl delete pod busybox
+
+# Listar Containers no POD
+kubectl get pods -o jsonpath="{.items[*].spec.containers[*].name}"
+
+# DESCRIBE - Descrever Objetos Kubernetes
+kubectl describe pod nginx
+kubectl get no
+kubectl describe node aks-nodepool1-16022034-vmss000000
+
+# LOGS - Obter Logs
+kubectl logs nginx
+kubectl logs nginx --since=30m nginx
+
+# Excluir Pods
+kubectl delete pod nginx
+kubectl get pods

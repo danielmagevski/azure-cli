@@ -1,0 +1,35 @@
+#Login no Azure
+az login
+
+# Variaveis
+rg=rg-aks
+local=eastus
+aks=aks-cluster
+
+# Grupo de recurso
+az grou create -n $rg -l $local
+
+# AKS
+az aks create -g $rg -n $aks
+
+#Listar AKS Cluster
+az aks list -o yaml
+
+# Url do AKS
+az aks browse -g $rg -n $aks
+
+# Detalhes do AKS
+az aks show -n $aks -g $rg
+
+# Parar o AKS
+az aks stop -n $aks -g $rg
+
+# Iniciar o AKS
+az aks start -n $aks -g $rg
+
+# Deletar o AKS
+az aks delete -n $aks -g $rg
+
+# Excluir o RG
+
+az group delete -n $rg
