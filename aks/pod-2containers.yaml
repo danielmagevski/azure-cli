@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-containers
+  labels:
+    name: pod-containers
+spec:
+  containers:
+  - name: container-1
+    image: nginx
+    resources:
+      limits:
+        memory: "128Mi"
+        cpu: "500m"
+    ports:
+      - containerPort: 80
+  - name: container-2
+    image: alpine
+    command: ["watch", "wget", "-qO-", "localhost/pagina.html"]
+    resources:
+      limits:
+        memory: "128Mi"
+        cpu: "500m"

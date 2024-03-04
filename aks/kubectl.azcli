@@ -34,7 +34,6 @@ kubectl api-resources
 # API Version
 kubectl api-versions
 
-
 # GET - Todos os objetos de todos os namespaces
 kubectl get all
 kubectl get all --all-namespaces
